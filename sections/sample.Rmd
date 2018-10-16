@@ -1,0 +1,77 @@
+
+# Taking samples
+
+This section focuses on generating samples from data. Most types of sampling can be done by manipulating the data using functions from the packages `dplyr` or `purrr`. These should be enough for most purposes. 
+
+More advanced sampling techniques can be found in the `sampling` package or in the `boot` package (which focuses on bootstrapping methods). If you already have survey data, the `survey` package allows you to calculate statistics taking into account factors such as different finite population corrections
+
+Examples of sampling the `df` data frame:
+
+### Simple random sampling
+
+```{r eval=FALSE}
+library(dplyr)
+
+my_sample <- 
+  df %>%
+	sample_n(100, replace = TRUE)
+```
+
+###Stratified sampling (weighted)
+
+```{r eval=FALSE}
+library(dplyr)
+
+my_sample <- 
+  df %>%
+  group_by(group_col) %>%
+  mutate(num = n()) %>%
+	sample_n(100, weight = num)
+```
+
+### Cluster sampling
+
+```{r eval=FALSE}
+library(dplyr)
+
+# Weights for each class can also be included
+class_names <- c("class1", "class2", "class3", "class4")
+class_sample <- sample(class_names, 3)
+
+my_sample <- 
+  df %>%
+  filter(class_col %in% class_sample)
+```
+
+### Systematic sampling
+
+```{r eval=FALSE}
+library(purrr)
+
+n <- 100
+every <- 10
+rows <- nrow(df)
+start <- sample(1:rows, size = 1)
+
+# Generate indices for the sample
+indx <- seq(from = start, to = (start + (n-1)*every), by = every)
+
+# If index larger than the number of rows, cycle round the data frame
+indx2 <-
+  indx %>%
+  map_dbl(~ (.x -1) %% rows + 1 )
+
+# Subset original data
+my_sample <- df[indx2, ]
+```
+
+Note, the `sample_n` command might not work with database connections.
+
+
+Resources:
+
+* `dplyr` [documentation](https://dplyr.tidyverse.org/reference/sample.html) on sampling row
+* Quick-R [guide to bootstrapping](https://www.statmethods.net/advstats/bootstrapping.html) 
+* `survey` package [documentation](https://dplyr.tidyverse.org/reference/sample.html)
+
+

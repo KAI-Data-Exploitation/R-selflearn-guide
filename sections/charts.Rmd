@@ -1,0 +1,116 @@
+
+# Creating charts {#charts}
+
+One of the strengths of R is its ability to easily produce good charts. Here we give a quick introduction to how to create both static and interactive charts.
+
+## Static plots
+
+While you can build plots with base graphics in R, we recommend using `ggplot2`, because it  allows a high level of both flexibility and control. It's based on the grammar of graphics, with all plots requiring 3 necessary elements: 
+
+* **Data**
+* **Aesthetic mappings**
+* **Geometries**
+
+A number of further components allow you to add additional layers, and overwrite plot defaults:
+
+* Statistics
+* Positions
+* Scales
+* Labels
+* Coordinates
+* Faceting specifications
+* Themes
+
+`ggplot2` contains some datasets, which you can use to practice creating charts. This includes `diamonds`, a dataset with the prices and 9 other characteristics of 50,000 round cut diamonds.
+
+```{r eval=TRUE, warning=FALSE, message=FALSE, fig.align='center'}
+library(ggplot2)
+
+ggplot(diamonds, aes(x=carat, y=price, colour = color)) +
+  geom_point(shape = 18) +
+  facet_wrap(~cut)
+
+```
+
+In the code above we defined a plot with data from the `diamonds` dataset, with *carat* mapped onto the x axis, *price* mapped onto the y axis and *color* mapped to colour. Then we added a geom layer to create a scatterplot with diamond-shaped points, and then split the plot into panels subset by *cut*.
+
+
+### Aesthetics vs Attributes
+ 
+It is worth noting here the difference between attributes and aesthetics. In the code above, *colour* is an aesthetic, because it has a variable mapped to it within the `aes()` function. By contrast, *shape* is an attribute; all points have the same shape, regardless of what category they are in. We could make the colour an attribute, and the shape an aesthetic, but this is not a sensible choice given the dataset.  
+
+```{r eval=TRUE, warning=FALSE, message=FALSE, fig.align='center'}
+
+ggplot(diamonds, aes(x=carat, y=price)) +
+  geom_point(colour = "skyblue2", aes(shape = color)) +
+  facet_wrap(~cut)
+
+```
+
+Resources:
+
+* [Data Visualisation](http://r4ds.had.co.nz/data-visualisation.html) of *R for Data Science* 
+* [A Layered Grammar of Graphics](http://vita.had.co.nz/papers/layered-grammar.pdf) is Hadley Wickham's 2009 academic article introducing the grammar of graphics
+* [ggplot2 Reference](https://ggplot2.tidyverse.org/reference/)
+* [Data Visualization with ggplot2 Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf)   
+* [sape ggplot2 Quick Reference](http://sape.inf.usi.ch/quick-reference/ggplot2)
+* Recreating an existing chart can be a good way to explore the flexibility of the ggplot2 package. Here is an example on how to [Recreate This Economist Graph](http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html#challenge:_recreate_this_economist_graph)
+
+
+
+## Interactive charts
+
+There are many different packages for creating interactive graphs in R, including: `plotly`, `dygraphs`, `ggiraph`, and `ggvis`. At the moment `plotly` looks the most promising for interactive graphs in general, with `dygraphs` being good for time series data. Note, charts involving maps were discussed in the [Working with geographic data](#maps) section.
+
+These interactive charts are produced in HTML format and can either be saved as their own HTML file or contained within a HTML report writtin in R Markdown (see the [Creating reports](#reports) section) or contained within a HTML dashboard or application such as those produced by `Shiny` and `flexdashboard` (see the [Creating dashboards](#dashboards) section).
+
+One nice feature of the `plotly` package is that many graphs produced by `ggplot2` can be quickly converted into interactive versions using the `ggplotly` command as demonstrated below.
+
+```{r eval=TRUE, warning=FALSE, message=FALSE, out.width='75%', out.height='65%'}
+library(plotly)
+
+plot <- ggplot(diamonds, aes(x=price, fill=cut)) + 
+          geom_histogram() 
+
+ggplotly(plot)
+```
+
+Resources:
+
+- [Plotly pages on the R interface](https://plot.ly/r/) contains simple examples of how to produce the most common chart types.
+- [Plotly full reference](https://plot.ly/r/reference/) contains full details of all the `plotly` functions.
+- [Plotly for R book](https://plotly-book.cpsievert.me/) contains a good introduction to using `plotly`.
+- The [dygraphs for R](https://rstudio.github.io/dygraphs/) website contains all you need to know to get started with `dygraphs`.
+
+
+## Network visualisation
+
+Networks describe the interactions between entities. This could be people communicating on social media, companies trading with one another or structures such as corporate groups. This is an example interacitve network diagram, try dragging the nodes.
+
+```{r network, eval=TRUE, echo=FALSE, out.width='45%', out.height='45%'}
+library(visNetwork)
+
+nodes <- data.frame(id = 1:5, label = c("A", "B", "C", "D", "E"))
+
+edges <- data.frame(from  = c(1, 1, 1, 4), 
+                    to    = c(2,3, 4, 5), 
+                    value = c(1.5, 1.5, 1, 1))
+
+visNetwork(nodes, edges, height = "350px", width = "100%")
+```
+
+There are a number of packages available for network visualization in R. Which package is most suitable will depend on your requirements; are you seeking to visualise a static network, a interactive network, or wanting to perform network analysis?
+
+
+Resources:
+
+* [Introduction to Network Analysis with R](https://www.jessesadler.com/post/network-analysis-with-r/) is a general introduction to creating and plotting network type objects using 6 different packages.
+* [Network visualization with R](http://kateto.net/network-visualization) is an in depth tutorial which is continuously updated and expanded. The 2018 version is available as a PDF [here](http://kateto.net/wp-content/uploads/2018/06/Polnet%202018%20R%20Network%20Visualization%20Workshop.pdf).
+* [Interactive and Dynamic Network Visualization in R](http://curleylab.psych.columbia.edu/netviz/) are a set of slides from a presentation focussed on making dynamic and interactive network graphs.
+
+
+*Note, the simple network diagram above was generated with the following code.*
+```{r network, echo=TRUE, eval=FALSE}
+```
+
+

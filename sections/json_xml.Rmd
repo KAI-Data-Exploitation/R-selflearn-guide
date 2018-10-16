@@ -1,0 +1,13 @@
+
+# Working with json and XML
+
+XML and json are semi-structured, hierarchical data structures. To import XML data into R use the `xml2` package, and for json use `jsonlite`. XML and json are often the outputs of API calls and R can access HTTP-based APIs using the `httr` package.
+
+
+Resources:
+
+* [Documentation for xml2](https://github.com/r-lib/xml2)
+* [Documentation for jsonlite](https://cran.r-project.org/web/packages/jsonlite/vignettes/json-mapping.pdf)
+* [Getting started with httr](https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html) is an introduction to using `httr`
+* [data.parliament.uk](http://www.data.parliament.uk/) lists information about APIs that parliament provide for people to access their data
+* [Companies House has a series of APIs](https://developer.companieshouse.gov.uk/api/docs/)

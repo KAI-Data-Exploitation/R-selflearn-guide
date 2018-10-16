@@ -1,0 +1,131 @@
+
+# Working with structured data
+
+This section focuses on working with structured, tabular data. This could be from a csv file, a file format associated with a piece of proprietary software, or data held in a database. 
+
+## Importing data from files
+
+The are a number of different ways to import common data types. We recommend using the `readr` package to import csv files; `readxl` to import excel files; and `haven` to import SAS, Stata, and SPSS files.
+
+Examples:
+
+* Read a csv file
+```{r eval=FALSE}
+library(readr)
+df <- read_csv("file.csv")
+```
+* Read an excel file
+```{r eval=FALSE}
+library(readxl)
+df <- read_excel("file.xlsx")
+```
+* Read a SAS file
+```{r eval=FALSE}
+library(haven)
+df <- read_sas("file.sas7bat")
+```
+* Read a Stata file (up to v14)
+```{r eval=FALSE}
+library(haven)
+df <- read_dta("file.dta")
+```
+* Read an SPSS file
+```{r eval=FALSE}
+library(haven)
+df_1 <- read_por("file.por")
+df_2 <- read_sav("file.sav")
+```
+
+Resources:
+
+* RStudio cheat sheet on importing data [(download here)](https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf) 
+* [Data import](http://r4ds.had.co.nz/data-import.html#parsing-a-file) chapter of *R for Data Science*
+
+
+## Connecting to a database
+
+R can connect directly to databases. At time of writing this only works for ADW but you should consult the CoDE/KAI IT Team guidance for the latest recommendations for connecting to databases.
+
+To connect to ADW you could run:
+```{r eval=FALSE}
+library(DBI)
+library(odbc)
+
+connection <- "Driver={SQL Server};server=IRA____,Database=db_name;trusted_connection=true;"
+
+con <- dbConnect(
+  odbc(),
+  .connection_string = connection
+)
+```
+where `IRA___` should be replaces with the server name, and `db_name` by the database name.
+
+Similarly, to connect to an existing Microsoft Access file do the following:
+```{r eval=FALSE}
+library(odbc)
+library(DBI)
+
+cs = "Driver=Microsoft Access Driver (*.mdb, *.accdb);DBQ=C:/path/to/access/file.mdb"
+con = dbConnect(odbc::odbc(), .connection_string = cs)
+
+# List tables within the database
+dbListTables(con)
+```
+
+However, our version of Microsoft Access is 32-bit and by default RStudio uses 64-bit R. To run the code above you need to be using 32-bit R.
+
+
+## Transforming data
+
+Once you have accessed your structured data you will have either read it directly into an R dataframe or established a connection to a database. Next you will want to explore the data and transform it.
+
+
+Exploring a dataframe:
+
+* `head(df)` displays the first 6 rows of dataframe `df`
+* `str(df)` displays the structure of dataframe `df`
+* `summary(df)` displays summaries about the variables in dataframe `df`
+* `names(df)` displayes the column names in dataframe `df`
+* `glimpse(df)` is an improved version of the `summary()` function provided in the `dplyr` package
+
+
+When using a connection to a database in R you will have used a package (such as `obdc`), which also imports the `DBI` package behind-the-scenes. This package allows you to perform many operations on databases, including running SQL commands. For example:
+```{r eval=FALSE}
+# List tables from database connection con
+dbListTables(con)
+
+# Run an SQL query and save the results to a variable
+# Not recommended!
+dfGetQuery(con, "SELECT ... FROM ...")
+```
+
+These SQL commands are run on the server rather than on your local computer, but do return the results to your R session. Additionally, the `sqldf` command allows you to run SQL style queries against an R dataframe. Using SQL allows you to reuse old code developed outside of R; however, we would recommend a different approach to working with both database connections and dataframes. Instead use the `dplyr` package. This provides a powerful, modern syntax for working with dataframes and database connections within R which is very similiar to SQL.
+
+For example, if you want to select `column1` from dataframe `df` where `column2` contains the number 2 you would run
+```{r eval=FALSE}
+library(dplyr)
+
+# Select column1 from df and where column2 equals 2
+df_out <-
+  df %>% 
+  select(column1)
+  filter(column2 == 2)
+```
+And `dplyr` also contains commands for joining data, grouping and summarising data, sorting data and many others.
+
+These commands can also be used on a table from a database connection using the package `dbplyr`. This extends `dplyr` and converts your commands into SQL to be run on the database. For example, if you have a database connection *con* and want to work with the table *example_table* within schema *dbo* as though it were a dataframe you could run the following code:
+
+```{r eval=FALSE}
+library(dbplyr)
+
+df <- tbl(con, in_schema("dbo", "example_table"))
+```
+
+And then you can use `dplyr` commands as before.
+
+Resources:
+
+* RStudio cheat sheet on transforming data [(download here)](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf)
+* [Data transformation](http://r4ds.had.co.nz/transform.html) chapter of *R for Data Science*
+* [Relational data](http://r4ds.had.co.nz/relational-data.html) chapter of *R for Data Science*
+* [Tidy data](http://r4ds.had.co.nz/data-import.html#parsing-a-file) chapter of *R for Data Science*

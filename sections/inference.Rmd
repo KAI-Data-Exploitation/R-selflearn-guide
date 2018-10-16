@@ -1,0 +1,9 @@
+
+# Making inferences
+
+R is a programming language built for statistics with statistical techniques built-in and a wide range of additional techniques available in packages. It is straightforward to perform ANOVA, t-tests, power analysis *etc.*
+
+
+Resources:
+
+* Quick-R guide to [basic statistics](https://www.statmethods.net/stats/index.html) covers all these techniques and more

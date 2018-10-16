@@ -1,0 +1,77 @@
+
+# Finding out more
+
+This section shows ways to find out more, from finding out how to use a given function or package to websites where you can find out about new packages.
+
+## Getting Help
+
+There are a number of ways to find help with R commands and packages.
+
+#### Built-in help
+
+Help can be searched in the console with the commands shown to the left; this will automatically open the Help file in the Help pane. You can also search the help files using the search box on the Help pane.
+
+* `?`: Displays the Help file for a specific function. For example, `?data.frame` displays  the Help file for the data.frame() function.
+* `??`: Searches for a word (or pattern) in the Help files. For example, `??list` returns the names of functions that contain the word list.
+* `help(package = "package_name")` displays the manual for the package in question. For example, `help(package = "caret")` shows the manual for the `caret` package.
+
+
+#### Vignettes
+
+Many packages contain vignettes, these are examples that demonstrate how to use the package by working through an example with actual code. Some packages have more than one vignette. For example, browse for the vignettes for the `dplyr` package with the following command: ```browseVignettes(package = "dplyr")```
+
+#### Stack Overflow
+
+Stack overflow is a programing question and answer site and is a good place to start when needing help with R as chances are someone else has already asked about the very thing you are stuck on. The questions on R can be found at: https://stackoverflow.com/questions/tagged/r
+
+
+## Additonal resources
+
+There are a wide range of R resources available online.
+
+#### Test data sets
+
+R comes with a number of test data sets built in, and many other packages provide additional example data sets. A list of available datasets (alongside which package needs to be loaded to access them) can be found [here](http://vincentarelbundock.github.io/Rdatasets/datasets.html).
+
+#### Cheat sheets
+
+Cheatsheets are helpful reminders of a shortcuts, functions, arguments and the like. They tend to be short but dense infographics, which can be a bit intimidating. They are useful for reminding you of the bit of code that does a particular task. 
+
+Useful cheat cheats include:
+
+* https://www.rstudio.com/resources/cheatsheets/
+* https://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf
+* https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+* https://s3.amazonaws.com/assets.datacamp.com/blog_assets/Tidyverse+Cheat+Sheet.pdf
+
+Further examples are listed under specific topics.
+
+
+#### GitHub
+
+GitHub is a development platform, and many R packages were developed on there. The homepage is not very helpful unless you have an account, but you should be able to view search results that point to GitHub from Google (other search engines are available...). Every repository should have a README.md file, explaining the contents, which appears automatically at the bottom of the page.
+
+Example repositories:
+
+* https://github.com/KAI-Data-Exploitation
+* https://github.com/Robinlovelace
+
+
+#### Style guide
+
+Styles guides aim to make code consistent and easier to read by setting out how to format the different components of a program. For R the [tidyverse style guide](http://style.tidyverse.org/) is commonly followed.
+
+
+#### Programming with R
+
+R is fully fledged programming level, but this side of R not been discussed in any great detail within this guide. *R for Data Science* has a good [chapter on programming](http://r4ds.had.co.nz/program-intro.html) which introduces many important concepts. More advanced topics such as different programming styles (object oriented programming and functional programming) and writing more performant code are discussed in [Advanced R](http://adv-r.had.co.nz/). And if you want to create your own R package there is a [book that talks you through it](http://r-pkgs.had.co.nz/). Another important aspect is how to debug your code. This is covered in a [series of articles](https://support.rstudio.com/hc/en-us/articles/205612627-Debugging-with-Rstudio) produced by RStudio.
+
+
+#### Other useful resources
+
+These are good resources for working with R, and many have been referenced throughout this guide:
+
+* [Quick-R](https://www.statmethods.net/index.html) 
+* [R for Data Science](http://r4ds.had.co.nz/)
+* [R-bloggers](https://www.r-bloggers.com/)
+

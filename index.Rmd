@@ -1,0 +1,88 @@
+---
+title: "Self-learning guide to R"
+author: "HMRC Centre for Data Exploitation"
+date: "October 2018"
+output: 
+  html_document:
+    smart: true
+    css: more-space.css
+    toc: true
+    toc_depth: 2
+    toc_float:
+      collapsed: TRUE
+---
+
+
+
+```{r child = "sections/intro.Rmd"}
+```
+
+***
+
+```{r child = "sections/structured.Rmd"}
+```
+
+***
+
+```{r child = "sections/json_xml.Rmd"}
+```
+
+***
+
+```{r child = "sections/text.Rmd"}
+```
+
+***
+
+```{r child = "sections/dates.Rmd"}
+```
+
+***
+
+```{r child = "sections/geo.Rmd"}
+```
+
+***
+
+```{r child = "sections/sample.Rmd"}
+```
+
+***
+
+```{r child = "sections/inference.Rmd"}
+```
+
+***
+
+```{r child = "sections/prediction.Rmd"}
+```
+
+***
+
+```{r child = "sections/forecast.Rmd"}
+```
+
+***
+
+```{r child = "sections/charts.Rmd"}
+```
+
+***
+
+```{r child = "sections/reports.Rmd"}
+```
+
+***
+
+```{r child = "sections/shiny.Rmd"}
+```
+
+***
+
+```{r child = "sections/help.Rmd"}
+```
+
+***
+
+```{r child = "sections/contributors.Rmd"}
+```

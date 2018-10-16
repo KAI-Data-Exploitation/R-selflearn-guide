@@ -1,0 +1,250 @@
+
+# Creating dashboards {#dashboards}
+
+Dashboards are typically collections of key visualisations and are most effective when they are interactive. Such interactivity is producing by writing R code that is converted into HTML and JavaScript that you can then view in a browser. These dashboards can often have so much functionality that they effectively become web apps. 
+
+In order to understand which package to use you need to understand the differences between *static* and *dynamic* webpages. A static webpage loads everything at the start and never changes, this loading could include interactive content such as D3 visualisations or leaflet maps which are all run client-side (the processing is done in the browser). For a dynamic webpage the content can be reloaded, for example data could be pulled from a database or items are changed due to the running of R code, normally on a remote server. Dynamic webpages are more flexible and allow you to work with larger datasets but require a web server, whereas static web pages can be run independently, not requiring the user to have R themselves or for the web page to be hosted on a server.
+
+The package `crosstalk` allows you to create static dashboards and `flexdashboard` allows you to create both static and dynamic dashboards. `Shiny` is a widely used package that is very powerful and allows you to create dynamic dashboards.The rest of this section focuses on creating `Shiny` dashboards. At the moment CoDE does not have a web server on which to run these dashboards. The ways in which you could currently share a `Shiny` dashboard are:
+
+- Get your customer to install RStudio on their computer and run the dashboard code themselves.
+- Find an unused networked computer to host the dashboard on.
+- Pay for an internal server to run the application on.
+
+
+## Getting started
+
+Shiny apps have two main components, the *user interface* (file saved as ui.R) and the *reactive server* (file saved as server.R).
+
+### ui.R
+
+The user interface script holds all information on the static (permanent) design and layout of the app.
+
+There are a variety of different packages and pre-set designs available to use - to name a few:
+
+- navBarPage - *good for tabs*
+- fluidPage - *good when using on different device types*
+- dashboardpage - *general purpose*
+
+Each of these designs allows you to easily create a sidebar/mainPanel layout for easy dashboard use.
+
+This is where you tell Shiny where to position all visible elements:
+
+- An *input* is a reference for `Shiny` to take the value chosen by the user to change another element on the page (usually added on the ui.R side)
+- An *output* is a widget, plot, table, map, chart or input box (tip of the iceberg!) that can change depending on any other input on the page
+- The server script (see below) handles all *interactive elements* (inputs and outputs), updating them on user changes (AKA reactivity)
+
+*Note: It is possible to make pretty much any ui element reactive by adding an Output function (with an id) on the ui side, and then building it out on the server side.*
+
+```{r ui-script, eval=FALSE}
+
+library(shiny)
+
+# Define UI for app that draws a histogram ----
+ui <- fluidPage(
+
+  # App title ----
+  titlePanel("Hello Shiny!"),
+
+  # Sidebar layout with input and output definitions ----
+  sidebarLayout(
+
+    # Sidebar panel for inputs ----
+    sidebarPanel(
+
+      # Input: Slider for the number of bins ----
+      sliderInput(inputId = "bins",
+                  label = "Number of bins:",
+                  min = 1,
+                  max = 50,
+                  value = 30)
+
+    ),
+
+    # Main panel for displaying outputs ----
+    mainPanel(
+
+      # Output: Histogram ----
+      plotOutput(outputId = "distPlot")
+
+    )
+  )
+)
+
+```
+
+### server.R
+
+As mentioned above, the server element of the Shiny app exists to make it *interactive*.
+
+In order to reference *clicks/choices/hovers/selections* from other elements in the app, use *input\$id* (e.g. "input\$bins" as  below)
+
+You can prevent elements from updating each time or make them wait for dependent inputs before rendering by using the `isolate()` and `req()` functions
+
+```{r server-script, eval=FALSE}
+
+# Define server logic required to draw a histogram ----
+server <- function(input, output) {
+
+  # Histogram of the Old Faithful Geyser Data ----
+  # with requested number of bins
+  # This expression that generates a histogram is wrapped in a call
+  # to renderPlot to indicate that:
+  #
+  # 1. It is "reactive" and therefore should be automatically
+  #    re-executed when inputs (input$bins) change
+  # 2. Its output type is a plot
+  output$distPlot <- renderPlot({
+
+    x    <- faithful$waiting
+    bins <- seq(min(x), max(x), length.out = input$bins + 1)
+
+    hist(x, breaks = bins, col = "#75AADB", border = "white",
+         xlab = "Waiting time to next eruption (in mins)",
+         main = "Histogram of waiting times")
+
+    })
+
+}
+
+
+```
+
+### Running the app
+
+It's good practise to separate your ui and server scripts into separate files and then use a `runApp()` function (only requires the folder location) to draw them together.
+
+However, for immediate learning processes here is the full script you need to run the app shown above.
+
+```{r full-script, eval=FALSE}
+
+library(shiny)
+
+# Define UI for app that draws a histogram ----
+ui <- fluidPage(
+
+  # App title ----
+  titlePanel("Hello Shiny!"),
+
+  # Sidebar layout with input and output definitions ----
+  sidebarLayout(
+
+    # Sidebar panel for inputs ----
+    sidebarPanel(
+
+      # Input: Slider for the number of bins ----
+      sliderInput(inputId = "bins",
+                  label = "Number of bins:",
+                  min = 1,
+                  max = 50,
+                  value = 30)
+
+    ),
+
+    # Main panel for displaying outputs ----
+    mainPanel(
+
+      # Output: Histogram ----
+      plotOutput(outputId = "distPlot")
+
+    )
+  )
+)
+
+# Define server logic required to draw a histogram ----
+server <- function(input, output) {
+
+  # Histogram of the Old Faithful Geyser Data ----
+  # with requested number of bins
+  # This expression that generates a histogram is wrapped in a call
+  # to renderPlot to indicate that:
+  #
+  # 1. It is "reactive" and therefore should be automatically
+  #    re-executed when inputs (input$bins) change
+  # 2. Its output type is a plot
+  output$distPlot <- renderPlot({
+
+    x    <- faithful$waiting
+    bins <- seq(min(x), max(x), length.out = input$bins + 1)
+
+    hist(x, breaks = bins, col = "#75AADB", border = "white",
+         xlab = "Waiting time to next eruption (in mins)",
+         main = "Histogram of waiting times")
+
+    })
+
+}
+
+shinyApp(ui = ui, server = server)
+
+```
+
+
+## Advanced considerations
+
+Shiny's capabilities are effectively endless, here are some things to consider when designing your dashboards.
+
+### User Experience:  
+  
+- [Linking Plotly charts as an input for other elements](https://plot.ly/r/shiny-coupled-events/)  
+- [Choosing icons](https://fontawesome.com/icons?from=io)  
+- [Running javascript code with shinyJS](https://github.com/daattali/shinyjs)  
+- [Improving the user experience with progress indicators](https://shiny.rstudio.com/articles/progress.html)  
+- [Using downloadHandler to download tables](https://shiny.rstudio.com/articles/download.html)  
+- [Downloading ggplots with ggsave](https://stackoverflow.com/questions/14810409/save-plots-made-in-a-shiny-app)  
+- [Showing elements based on conditions](https://shiny.rstudio.com/gallery/conditionalpanel-demo.html)  
+
+
+### Speed:
+
+- Run all the aggregations, data processing and queries in advance (like a cube), then run `Shiny` from condensed datasets at an individual level.
+- Add the data used into a database, then query as an when needed instead of running in memory.
+- Use the `req()` function inside `render({})` functions on your server.R script to stop the app trying to draw plots/tables until the required reactive data/filters have already been sorted out.
+- Use the `isolate()` function to stop input changes affecting every output they're linked to every time.
+
+
+### Other considerations:  
+  
+- [Separating code for complex dashboards with Shiny Modules](https://shiny.rstudio.com/articles/modules.html)  
+- [Saving the state of a Shiny application with Bookmarking](https://shiny.rstudio.com/articles/bookmarking-state.html)  
+- [Tracking client usage with session$clientData](https://shiny.rstudio.com/articles/client-data.html)  
+- [Linking to Google Analytics for broader tracking](https://shiny.rstudio.com/articles/google-analytics.html)  
+- [Debugging Shiny applications](https://shiny.rstudio.com/articles/debugging.html)  
+- [Server-to-client custom messages](https://shiny.rstudio.com/gallery/server-to-client-custom-messages.html)  
+- [Deploying Shiny apps on the web (with RStudio's own services)](https://shiny.rstudio.com/articles/deployment-web.html)  
+
+
+## Learning resources
+  
+- [**Shiny Official Site**](https://fontawesome.com/icons?from=io)  
+- [**Shiny Cheatsheet**](https://shiny.rstudio.com/articles/cheatsheet.html)  
+  
+**Tutorials**  
+  
+- [Shiny Official Tutorial](https://shiny.rstudio.com/tutorial/written-tutorial/lesson1/)  
+- [Datacamp Tutorial](https://www.datacamp.com/courses/building-web-applications-in-r-with-shiny)  
+- [Mango Solutions Tutorial](https://github.com/MangoTheCat/shiny_beyond_the_basics/blob/master/Workshop%202%20-%20Shiny%20-%20Beyond%20the%20Basics.pdf)  
+
+**Visualisation packages**
+
+- [**DT** (best for interactive tables!)](https://rstudio.github.io/DT/shiny.html)  
+- [**Plotly** (use ggplotly() function to convert ggplot to interactive charts)](https://plot.ly/r/shiny-tutorial/)  
+- [**Leaflet** (maps)](https://rstudio.github.io/leaflet/shiny.html)  
+- [**d3**](http://www.htmlwidgets.org/showcase_networkD3.html)  
+- [**Google Charts**](https://github.com/mages/googleVis/)
+  
+**Inspiration**  
+  
+- [RStudio App Gallery](https://shiny.rstudio.com/gallery/)  
+- [Shiny Extended Gallery](https://shiny.rstudio.com/gallery/see-more.html)  
+- [Show Me Shiny Gallery](https://www.showmeshiny.com/)  
+  
+**Influencers**  
+  
+- [Dean Attali](https://deanattali.com/blog/advanced-shiny-tips/)  
+- [Joe Cheng](https://twitter.com/jcheng?lang=en)  
+  
+**HMRC Examples**  
+  
+- [shinyTemplate](https://dataexploitation.shinyapps.io/shinytemplate/) 
+

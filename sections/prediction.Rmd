@@ -1,0 +1,112 @@
+
+# Making predictions
+
+Predictive analytics is a suite of techniques for making predictions by learning patterns from data, typically using machine learning techiques. These techniques can be split in to two types; *supervised learning* and *unsupervised learning*. In supervised learning you know the true value of the variable of interest, whereas with unsupervised learning you do not have this variable so you instead look to understand the structure present within the data.
+
+## Supervised learning
+
+R contains an extremely wide range of different techniques; from well-established methods to more niche approaches. Typically different techniques have their own package, and whilst syntaxes between packages tend to be similar they normally differ to some degree.
+
+If you will only ever use one technique it makes sense to learn that package or function in detail. For example,
+
+- `lm()` from the build-in stats package performs linear regression.
+- `glm()` from the built-in stats package performs logistic regression (and other generalised linear models)
+- `rpart()` from the `rpart` package constructs decision trees.
+
+However, if you want to use a range of different techniques, be it within a single project or using different techniques for different taks, it makes sense to use the `caret` package (**C**lassification **A**nd **RE**gression **T**raining) which provides a common interface to a wide range of R packages that deal with classification and regression.
+
+`caret` also provides functions to preprocess data (for example scaling features or performing principal components analysis), for combining models (ensembling), and for evaluating the performance of models (including train/test splits, cross-validation and confusion matrices).
+
+
+### Quick overview of the caret package
+
+`caret` requires that the package containing the underlying technique is also installed. To install `caret` alongside a number of different models run the command:
+```{r eval=FALSE}
+install.packages("caret", dependencies = c("Depends", "Suggests"))
+```
+which might take some time.
+
+A typical workflow could be:
+
+- Preparing and preprocessing data
+- Splitting the data into training and test sets
+- Selecting and creating features
+- Training the model
+- Tuning the model hyperparameters
+- Evaluating the model
+- Running the model
+
+All these steps can be done using tools provided by `caret`, but here we will only touch on a few of the above steps to outline the main commands that `caret` provides. The [caret documentation](https://topepo.github.io/caret/index.html) provides more details and is easy to follow.
+
+#### Splitting the data into training and test sets
+
+The `createDataPartition()` function can be used to split your data into a training set and a test set.
+```{r eval=FALSE}
+in_train <- createDataPartition(df$outcome, p = 0.66)
+
+training <- df[ inTrain, ]
+testing <-  df[-inTrain, ]
+
+```
+`caret` also contains tools for the alternative approach of using cross-validation.
+
+#### Training the model
+
+Any of the models that `caret` contains can be trained using the `train()` function. For example, if you had a dataframe called `training` containing the columns `outcome`, `feature_1`, `feature_2`, and `feature_3` you can train a decision using the following code
+```{r eval=FALSE}
+# Train using just feature_1
+model <- train(outcome ~ feature_1, data = training, method="rpart")
+
+# Train using feature_1 and feature_2
+model <- train(outcome ~ feature_1 + feature_2, data = training, method="rpart")
+
+# Train using all features
+model <- train(outcome ~ . , data = training, method="rpart")
+```
+
+Note, this uses R's formula notation, where `outcome ~ feature_1` means you want to explain `outcome` using `feature_1`. Instead you can pass the function `train()` a matrix of features as the `x` argument and a matrix of outcomes as the `y` argument.
+
+#### Evaluating the model
+
+Predictions can then be made using this model; this could be done on the test set in order to evaluate the model or on new data when the model is run for real.
+```{r eval=FALSE}
+predictions <- predict(model, newdata = testing)
+```
+which can be evaluated, for example by calculating the confusion matrix if were a classifciation task.
+```{r eval=FALSE}
+confusionMatrix(data = prediction, testing$outcome)
+```
+
+Resources:
+
+- The detailed [caret documentation](https://topepo.github.io/caret/index.html)
+- [A short introduction to the caret package](https://cran.r-project.org/web/packages/caret/vignettes/caret.html).
+- [This guide](http://www.machinelearningplus.com/machine-learning/caret-package/) to `caret` is also useful
+- More information on R's formula notation can be found [here](http://faculty.chicagobooth.edu/richard.hahn/teaching/formulanotation.pdf) and [here](
+https://www.datacamp.com/community/tutorials/r-formula-tutorial#using)
+
+
+- [An introduction to machine learning](https://www.digitalocean.com/community/tutorials/an-introduction-to-machine-learning)  
+- [8 ways to deal with continuous variables in predictive modelling](https://www.analyticsvidhya.com/blog/2015/11/8-ways-deal-continuous-variables-predictive-modeling/)
+- [Using Support Vector Machines for machine learning with caret](http://dataaspirant.com/2017/01/19/support-vector-machine-classifier-implementation-r-caret-package/)  
+
+- [An introduction to feature selection](https://machinelearningmastery.com/an-introduction-to-feature-selection/)  
+- [Feature selection with caret](https://machinelearningmastery.com/feature-selection-with-the-caret-r-package/) 
+- [A practical guide to PCA for feature selection](https://www.analyticsvidhya.com/blog/2016/03/practical-guide-principal-component-analysis-python/)  
+- [Understanding feature engineering](https://towardsdatascience.com/understanding-feature-engineering-part-1-continuous-numeric-data-da4e47099a7b) 
+- [How to get good at feature engineering](https://machinelearningmastery.com/discover-feature-engineering-how-to-engineer-features-and-how-to-get-good-at-it/)  
+  
+- [Metrics to evaluate your machine learning algorithm](https://towardsdatascience.com/metrics-to-evaluate-your-machine-learning-algorithm-f10ba6e38234)  
+- [Performance metrics for classification methods](https://medium.com/greyatom/performance-metrics-for-classification-problems-in-machine-learning-part-i-b085d432082b)  
+- The `pROC` package contains tools for visualising ROC curves and for calculating the area under the curve. More information can be found [here](https://www.rdocumentation.org/packages/pROC/versions/1.13.0).  
+
+
+## Unsupervised learning
+
+One of the main techniques in unsupervised learning is clustering. This is a way of exploring the data and seeing which data points naturally group together. Clustering is typically used outside of making predictions, but can be used as features for a supervised learning model or, when you are happy with the clusters identified, you can predict which clusters unseen data points belong to.
+
+The built-in stats package provides the function `hclust()` for hierarchical clustering and the function `kmeans()` for K-means clustering. Packages, such as `dbscan`, are also available that implement other clustering techniques.
+
+K-means clustering is often used because it is computational efficient, but it can fail to produce the clusters you expect in certain circumstances because it makes a number of assumptions about the data. The documentation for `sklearn` (a Python package) has a [good demonstration of this.](http://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_assumptions.html).
+
+More information about how to apply these two techniques in R can be found on [Quick-R](https://www.statmethods.net/advstats/cluster.html) and a tutorial on using K-means clustering can be found on [DataCamp](https://www.datacamp.com/community/tutorials/k-means-clustering-r).

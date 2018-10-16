@@ -1,0 +1,12 @@
+
+# Making forecasts
+
+The R package `forecast` contains a number of tools for performing forecasting, including the techniques of ARIMA, exponential smoothing, and Holt-Winters. In addition it creates fan charts to show the uncertainty of the forecast.
+
+Alternatively, if you currently use the X13 command line tool for performing forecasting you can use the `X12` package within R to produce the exact same output.
+
+
+Resources:
+
+* Two of the authors of the `forecast` package have published a book, [Forecasting: Principles and Practice](https://otexts.org/fpp2/) about forecasting with examples in R
+* Quick-R guide to [time series and forecasting](https://www.statmethods.net/advstats/timeseries.html)

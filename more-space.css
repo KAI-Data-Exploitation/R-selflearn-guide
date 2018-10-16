@@ -1,0 +1,117 @@
+/* 
+  more-spaces.css
+ 
+  More space between items within R Markdown output
+ 
+*/
+
+
+
+/*---- Spaces at top and bottom of page ----*/
+
+.row-fluid{
+	margin-top: 1.25cm;
+}
+
+body{
+	margin-bottom: 2.0cm;
+}
+
+
+
+/*---- Spaces before h1 and h2 blocks ----*/
+
+div[class = "section level1"] {
+	margin-top: 1.5cm;
+
+}
+
+/* Space between h2 levels */
+div[class = "section level2"] {
+	margin-top: 0.55cm;
+
+}
+
+
+/*---- Formatting and spacing of title elements ----*/
+
+h1.title {
+	font-size: 60px;
+	margin-bottom: 1.75cm;
+
+}
+
+.author {
+  font-size: 25px;
+  font-weight: normal;
+  margin-bottom: 0.5cm;
+  margin-top: 10pt;
+}
+
+.date {
+  font-size: 25px;
+  font-weight: normal;
+	margin-bottom: 2.25cm;
+	margin-top: 10pt;
+}
+
+
+/*---- Sizes and spaces of heading levels ----*/
+
+h1:not(.title){
+	font-size: 34px;
+	margin-top: 10pt;
+	margin-bottom: 15pt;
+}
+
+h2{
+	font-size: 25px;
+	margin-top: 10pt;
+	margin-bottom: 10pt;
+}
+
+h3{
+	font-size: 18px;
+}
+
+h4{
+	font-size: 14px;
+	font-weight: bold;
+	margin-top: 20px;
+	
+}
+
+
+/*---- Spacing after paragraphs, list items and code blocks ----*/
+
+p{
+	margin-bottom: 0.25cm;
+}
+
+li{
+	margin-bottom: 0.25cm;
+}
+
+pre{
+  margin-bottom: 0.25cm;
+}
+
+
+/*---- Spacing after html widget and centring ----*/
+
+div[id^='htmlwidget-']{
+	margin-bottom: 0.50cm;
+}
+
+
+.html-widget {
+	margin: auto;
+}
+
+
+iframe{
+	display: block;
+	margin: auto;
+	margin-bottom: 0.50cm;
+	border-width: 0;
+}
