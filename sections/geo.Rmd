@@ -54,7 +54,7 @@ gb <- st_read("../data/gb.json")
 
 Static maps can be created using `ggplot2`. The version of `ggplot2` currently available on the network cannot work with data from the `sf` package directly, you need to first change the format using the `broom` package as follows.
 
-```{r, eval=TRUE, results="hide"}
+```{r, eval=TRUE, results="hide", messages=FALSE, warning=FALSE}
 library(broom)
 
 gb_plot <- tidy(as(gb, "Spatial"), region = "ctry16nm")

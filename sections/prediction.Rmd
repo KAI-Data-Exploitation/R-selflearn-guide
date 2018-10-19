@@ -107,6 +107,6 @@ One of the main techniques in unsupervised learning is clustering. This is a way
 
 The built-in stats package provides the function `hclust()` for hierarchical clustering and the function `kmeans()` for K-means clustering. Packages, such as `dbscan`, are also available that implement other clustering techniques.
 
-K-means clustering is often used because it is computational efficient, but it can fail to produce the clusters you expect in certain circumstances because it makes a number of assumptions about the data. The documentation for `sklearn` (a Python package) has a [good demonstration of this.](http://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_assumptions.html).
+K-means clustering is often used because it is computational efficient, but it can fail to produce the clusters you expect in certain circumstances because it makes a number of assumptions about the data. The documentation for `sklearn` (a Python package) has a [good demonstration of this](http://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_assumptions.html).
 
 More information about how to apply these two techniques in R can be found on [Quick-R](https://www.statmethods.net/advstats/cluster.html) and a tutorial on using K-means clustering can be found on [DataCamp](https://www.datacamp.com/community/tutorials/k-means-clustering-r).

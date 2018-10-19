@@ -51,14 +51,14 @@ To connect to ADW you could run:
 library(DBI)
 library(odbc)
 
-connection <- "Driver={SQL Server};server=IRA____,Database=db_name;trusted_connection=true;"
+connection <- "Driver={SQL Server};server=server_name,Database=db_name;trusted_connection=true;"
 
 con <- dbConnect(
   odbc(),
   .connection_string = connection
 )
 ```
-where `IRA___` should be replaces with the server name, and `db_name` by the database name.
+where `server_name` should be replaced with the server name, and `db_name` by the database name.
 
 Similarly, to connect to an existing Microsoft Access file do the following:
 ```{r eval=FALSE}
@@ -111,7 +111,15 @@ df_out <-
   select(column1)
   filter(column2 == 2)
 ```
-And `dplyr` also contains commands for joining data, grouping and summarising data, sorting data and many others.
+And `dplyr` also contains commands for joining data, grouping and summarising data, sorting data and many others. Details on these commands can be found in the *Introduction to R in 3 hours* course and in the [data transformation](http://r4ds.had.co.nz/transform.html) chapter of *R for Data Science*. The *Introduction to R in 3 hours* course summarises these functions as:
+
+- `filter()` pick rows by values
+- `select()` pick variables by names
+- `arrange()` sort/reorder rows
+- `mutate()` create new variables from existing ones
+- `summarise()` collapse many values down to a summary
+- `group_by()` group up data and perform operations at group level
+- `ungroup()` removes the grouping of the variables
 
 These commands can also be used on a table from a database connection using the package `dbplyr`. This extends `dplyr` and converts your commands into SQL to be run on the database. For example, if you have a database connection *con* and want to work with the table *example_table* within schema *dbo* as though it were a dataframe you could run the following code:
 

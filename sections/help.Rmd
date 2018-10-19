@@ -25,7 +25,7 @@ Many packages contain vignettes, these are examples that demonstrate how to use 
 Stack overflow is a programing question and answer site and is a good place to start when needing help with R as chances are someone else has already asked about the very thing you are stuck on. The questions on R can be found at: https://stackoverflow.com/questions/tagged/r
 
 
-## Additonal resources
+## Additional resources
 
 There are a wide range of R resources available online.
 
