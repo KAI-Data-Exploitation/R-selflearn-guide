@@ -5,7 +5,7 @@ This section focuses on working with structured, tabular data. This could be fro
 
 ## Importing data from files
 
-The are a number of different ways to import common data types. We recommend using the `readr` package to import csv files; `readxl` to import excel files; and `haven` to import SAS, Stata, and SPSS files.
+The are a number of different ways to import common data types. We recommend using: the `readr` package to import csv files; `readxl` to import excel files; and `haven` to import SAS, Stata, and SPSS files.
 
 Examples:
 
@@ -44,7 +44,7 @@ Resources:
 
 ## Connecting to a database
 
-R can connect directly to databases. At time of writing this only works for ADW but you should consult the CoDE/KAI IT Team guidance for the latest recommendations for connecting to databases.
+R can connect directly to databases. At time of writing this only works for our ADW database, but you should consult the CoDE/KAI IT Team guidance for the latest recommendations for connecting to databases.
 
 To connect to ADW you could run:
 ```{r eval=FALSE}
@@ -77,7 +77,7 @@ However, our version of Microsoft Access is 32-bit and by default RStudio uses 6
 
 ## Transforming data
 
-Once you have accessed your structured data you will have either read it directly into an R dataframe or established a connection to a database. Next you will want to explore the data and transform it.
+Once you have accessed your structured data you will either have read it directly into an R dataframe or established a connection to a database. Next you will want to explore the data and transform it.
 
 
 Exploring a dataframe:
@@ -89,17 +89,17 @@ Exploring a dataframe:
 * `glimpse(df)` is an improved version of the `summary()` function provided in the `dplyr` package
 
 
-When using a connection to a database in R you will have used a package (such as `obdc`), which also imports the `DBI` package behind-the-scenes. This package allows you to perform many operations on databases, including running SQL commands. For example:
+When using a connection to a database in R you will have used a package (such as `obdc`) which also imports the `DBI` package behind the scenes. This package allows you to perform many operations on databases, including running SQL commands. For example:
 ```{r eval=FALSE}
 # List tables from database connection con
 dbListTables(con)
 
 # Run an SQL query and save the results to a variable
-# Not recommended!
+# But we would recommend using dplyr instead
 dfGetQuery(con, "SELECT ... FROM ...")
 ```
 
-These SQL commands are run on the server rather than on your local computer, but do return the results to your R session. Additionally, the `sqldf` command allows you to run SQL style queries against an R dataframe. Using SQL allows you to reuse old code developed outside of R; however, we would recommend a different approach to working with both database connections and dataframes. Instead use the `dplyr` package. This provides a powerful, modern syntax for working with dataframes and database connections within R which is very similiar to SQL.
+These SQL commands are run on the server rather than on your local computer, but do return the results to your R session. Additionally, the `sqldf` command allows you to run SQL style queries against an R dataframe. Using SQL allows you to reuse old code developed outside of R. However, we would recommend a different approach to working with both database connections and dataframes: use the `dplyr` package instead. This provides a powerful, modern syntax for working with dataframes and database connections within R which is very similiar to SQL.
 
 For example, if you want to select `column1` from dataframe `df` where `column2` contains the number 2 you would run
 ```{r eval=FALSE}
@@ -119,9 +119,9 @@ And `dplyr` also contains commands for joining data, grouping and summarising da
 - `mutate()` create new variables from existing ones
 - `summarise()` collapse many values down to a summary
 - `group_by()` group up data and perform operations at group level
-- `ungroup()` removes the grouping of the variables
+- `ungroup()` remove the grouping of the variables
 
-These commands can also be used on a table from a database connection using the package `dbplyr`. This extends `dplyr` and converts your commands into SQL to be run on the database. For example, if you have a database connection *con* and want to work with the table *example_table* within schema *dbo* as though it were a dataframe you could run the following code:
+These commands can also be used on a table from a database connection using the package `dbplyr`. This extends `dplyr` and converts your commands into SQL to be run on the database. For example, if you have a database connection *con* and want to work with the table *example_table* within schema *dbo* as though it were a dataframe, you could run the following code:
 
 ```{r eval=FALSE}
 library(dbplyr)

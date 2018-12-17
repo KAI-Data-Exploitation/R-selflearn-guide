@@ -62,11 +62,6 @@ Example repositories:
 Styles guides aim to make code consistent and easier to read by setting out how to format the different components of a program. For R the [tidyverse style guide](http://style.tidyverse.org/) is commonly followed.
 
 
-#### Programming with R
-
-R is fully fledged programming level, but this side of R not been discussed in any great detail within this guide. *R for Data Science* has a good [chapter on programming](http://r4ds.had.co.nz/program-intro.html) which introduces many important concepts. More advanced topics such as different programming styles (object oriented programming and functional programming) and writing more performant code are discussed in [Advanced R](http://adv-r.had.co.nz/). And if you want to create your own R package there is a [book that talks you through it](http://r-pkgs.had.co.nz/). Another important aspect is how to debug your code. This is covered in a [series of articles](https://support.rstudio.com/hc/en-us/articles/205612627-Debugging-with-Rstudio) produced by RStudio.
-
-
 #### Other useful resources
 
 These are good resources for working with R, and many have been referenced throughout this guide:

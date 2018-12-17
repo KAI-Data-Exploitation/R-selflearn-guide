@@ -1,0 +1,102 @@
+
+# Programming
+
+
+R is a fully fledged programming language. This section is a very quick introduction to how common programming constructs are implemented within R.
+
+### Defining your own function
+
+To define a function called `function_name` you would use the following syntax.
+```{r eval=FALSE}
+
+function_name <- function(arguement_1, arguement_2){
+  ...
+  return(result)
+}
+
+```
+
+The final return statement is optional, if it is not present the function will return the value of the last expression evaluated. These functions can then be called in the usual way, *e.g.* `function_name(arg1, arg2)`.
+
+### If statements
+
+The syntax for *if statements* is the following:
+```{r eval=FALSE}
+
+if (condition_1) {
+  ...
+} else if (condition_2) {
+  ...
+} else {
+  ...
+}
+
+
+```
+where the conditions are any logical tests.
+
+### For loops
+
+R does give you the option to use *for loops* but also provides a number of other ways to iterate through a series of values. Consider the following example where we first define a vector of strings.
+```{r eval=FALSE}
+
+vec_a <- c("string", "str", "s")
+
+```
+
+We want to find the length of each of these strings. You could use a for loop to iterate over all the elements in this vector.
+```{r eval=FALSE}
+
+for (i in vec_a){
+  print(nchar(i))
+}
+
+
+```
+(Another helpful syntax is that, for example, `1:10` produces a list of the numbers between one and ten that can be iterated through.)
+
+However, many functions in R have been designed to work directly with vectors and produce vectors as outputs. `nchar()` is one such function.
+
+```{r eval=FALSE}
+nchar(vec_a)
+```
+
+Let's imagine that `nchar` did not work on a vector, that it would only take a single value as input. If we wanted to iterate over our vector and for each element apply the `nchar` function we could use the functions `lapply`, `sapply`, and `vapply`. 
+```{r eval=FALSE}
+
+# The lapply function produces a list
+lapply(vec_a, nchar)
+
+# The sapply function tries to simplify to a vector
+sapply(vec_a, nchar)
+
+# It is recommended to use vapply where you specify the output type
+vapply(vec_a, nchar, integer(1))
+
+```
+
+The package `purrr` (part of the `tidyverse`) provides newer, more consistent replacements for the `apply` family of functions. These are the `map` functions.
+```{r eval=FALSE}
+library(purrr)
+
+# map produces a list
+map(vec_a, nchar)
+
+# map_int produces a vector of integers
+# map_dble, map_char and map_lgl exist for other data types
+map_int(vec_a, nchar)
+
+```
+
+
+Resources:
+
+* *R for Data Science* has a good [chapter on programming](http://r4ds.had.co.nz/program-intro.html) which introduces many important concepts.
+*[Programming with R](https://swcarpentry.github.io/r-novice-inflammation/) has a number of episodes demonstrating different aspects of R programming.
+* RStudio cheat sheet on applying functions with `purrr` [(Download here)](https://github.com/rstudio/cheatsheets/raw/master/purrr.pdf).
+* More advanced topics such as different programming styles and writing more performant code are discussed in [Advanced R](http://adv-r.had.co.nz/).
+* Creating your own R package there [discussed here](http://r-pkgs.had.co.nz/).
+* Debugging code is discussed [in these articles](https://support.rstudio.com/hc/en-us/articles/205612627-Debugging-with-Rstudio.
+* The [tidyverse style guide](http://style.tidyverse.org/) is a commonly followed style guide.
+
+

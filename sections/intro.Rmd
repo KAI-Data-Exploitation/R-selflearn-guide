@@ -1,11 +1,11 @@
 
 There are lots of freely available resources for learning R online, and for any one task there are many different packages that can help. It can be difficult to identify which packages you should use, ideally you want packages that are being actively maintained and widely used.
 
-The aim of this guide is not to be a training course but to be a list of recommended packages and useful resources, focused around the types of activities our analysts typically do. Often we include the basic commands to get you up and running with a package as soon as possible. It also shows the wide range of tasks that can easily be tackled with R, in fact this guide was written in R!
+The aim of this guide is not to be a training course but to be a list of recommended packages and useful resources, focused around the types of activities our analysts typically do. Often we include the basic commands to get you up and running with a package as soon as possible. It also shows the wide range of tasks that can easily be tackled with R; in fact this guide was written in R!
 
 If you are after training that systematically goes through the R language and how it can applied to analytics we recommend:
 
-* The book [R for Data Science](http://r4ds.had.co.nz/)
-* Or obtain a licence for [DataCamp](https://www.datacamp.com) and follow the *Data Scientist with R* career track
+* Either reading the book [R for Data Science](http://r4ds.had.co.nz/)
+* Or obtaining a licence for [DataCamp](https://www.datacamp.com) and following the *Data Scientist with R* career track
 
-And there is a [good style guide](http://style.tidyverse.org/) which is our suggested approach to how to format your R code for clarity and consistency.
+There is also a [good style guide](http://style.tidyverse.org/) which we would recommend as the best approach to formatting your R code for clarity and consistency.

@@ -1,11 +1,11 @@
 
 # Working with text
 
-Text data can be explored in a number of different ways: identifying the most common words or phrases, sentiment analysis, using machine learning to split the documents into different topics (a form of machine learning), or more generally using text as features in a predictive model.
+Text data can be explored in a number of different ways: identifying the most common words or phrases; sentiment analysis; using machine learning to split the documents into different topics (a form of machine learning); or, more generally, using text as features in a predictive model.
 
-There are a number of packages in R for working with text; `tm` is the most established and will be the focus of the discussion here but many new packages have been released, with `text2vec` in particular looking very promising due to its simple interface and its inclusion of advanced techniques.
+There are a number of packages in R for working with text. `tm` is the most established and will be the focus of the discussion here but many new packages have been released, with `text2vec` in particular looking very promising due to its simple interface and its inclusion of advanced techniques.
 
-Before text can be used it needs to be preprocessed, which usually means cleaning the text and converting words into their root froms either by stemming or lemmatisation.
+Before text can be used it needs to be preprocessed, which usually means cleaning the text and converting words into their root forms by either stemming or lemmatisation.
 
 Resources:
 
@@ -40,11 +40,11 @@ The following functions can be used in this package to clean your data:
 - `tm_map(corpus, content_transformer(to_lower))` will remove all capital letters and replace them with lowercase.  
 - `tm_map(corpus, removePunctuation)` will remove all punctuation.  
 - `tm_map(corpus, removeNumbers)` will remove all numbers.  
-- `tm_map(corpus, removeWords, all_stop)` will remove a list of words from the data you wish to exclude. R already has built in lists of common words such as 'i', 'me', 'you', 'he'. In this case we have used a personalised list called 'all_stop'.  
-- `tm_map(corpus, stripWhitespace)` will remove any spacing that has occurred when removing number, punctuation, etc.  
+- `tm_map(corpus, removeWords, all_stop)` takes a list of words that you wish to exclude from the data and removes them. R already has built-in lists of common words such as 'i', 'me', 'you', and 'he'. In this case we have used a personalised list called 'all_stop'.  
+- `tm_map(corpus, stripWhitespace)` will remove any spacing that has occurred when removing numbers, punctuation, *etc*.  
   
 Below is an example of a function taking a corpus of documents, cleaning and stemming it and assigning it as `cleaned_corpus`.
-```{r, results=FALSE, message=FALSE}
+```{r, results=FALSE, message=FALSE, warning=FALSE}
 library(tm)
 library(dplyr)
 
@@ -58,12 +58,13 @@ clean_corpus <- function(corpus){
   tm_map(removePunctuation) %>%
   tm_map(removeNumbers) %>%
   tm_map(removeWords, all_stop) %>%
-  tm_map(stripWhitespace) -> clean_corpus
+  tm_map(stripWhitespace) %>%
+  tm_map(PlainTextDocument) -> clean_corpus
   return(clean_corpus)
 }
 ```
 
-Which can then be applied on a corpus.
+This can then be applied on a corpus.
 ```{r eval=FALSE}
 cleaned_corpus <- clean_corpus(tm_corpus)
 ```
@@ -72,9 +73,9 @@ You can also write your own functions to be applied to the data using the `tm_ma
 
 ### Stemming and lemmatisation
 
-Stemming is the process of reducing words to their stem, base or root form. This is done to group together similar words so their frequencies reflect the true use of the word, another more sophisticated version of this is lemmatisation.
+Stemming is the process of reducing words to their stem, base or root form. This is done to group together similar words so that their frequencies reflect the true use of the word, another more sophisticated version of this is lemmatisation.
 
-Stemming just removes the end of the word to approximate the root and can be dobe in `tm` using the following command.
+Stemming just removes the end of the word to approximate the root and can be done in `tm` using the following command:
 ```{r, eval=FALSE}
 tm_corpus %>% tm_map(stemDocument)
 ```
@@ -101,12 +102,12 @@ hunspell_suggest(bad[[1]])
 
 ## Visualisations
 
-Common visualisations used to explore text data include word frequency charts and word clouds. These are outlined below, where the *crude* dataset (which loads a corpus of documents about crude oil) provided by the `tm`.
+Common visualisations used to explore text data include word frequency charts and word clouds. These are demonstrated below, where the *crude* dataset (a corpus of documents about crude oil provided by the `tm` package) has been used .
 
 ### Word frequency charts
 
 Once your data has been cleaned you can start creating visualisations. One of these could be a word frequency chart. To do this we will use the `ggplot2` package.  
-After cleaning your data you'll have to create a document term matrix using `tm`. The code below will do this.  
+After cleaning your data you'll have to create a document-term matrix using `tm`. This is a matrix whose elements indicate the number of times a given word (or term) has appeared within a given document. The columns denote words and the rows denote documents. The code below generate a document-term matrix on the *crude* dataset.  
 ```{r results=FALSE, message=FALSE, warning=FALSE}
 library(tm)
 library(dplyr)
@@ -117,7 +118,7 @@ crude <- clean_corpus(crude)
 
 dtm <- DocumentTermMatrix(crude)
 ```
-You will then need to select the word frequencies you want, the code below will generate word counts. 
+You will then need to select the word frequencies you want. The code below will generate word counts. 
 
 ```{r results=FALSE}
 word_counts <- 
@@ -141,23 +142,18 @@ ggplot(wf, aes(x = reorder(word, -freq), y = freq, fill="")) +
 
 ### Word clouds
 
-Another way you can visualise your data is using a word cloud. Word clouds do have their limitations but are good for picking out words at a quick glance. A package you can use to create these is `wordcloud2`. Below we create a word cloud of all words appearing more than two times in the corpus. Note, the word frequencies need to be sorted so that the most commonly occuring words appear at the start of the data frame.
-```{r eval=FALSE, echo=TRUE}
-library(wordcloud2)
+Another way you can visualise your data is by using a word cloud. Word clouds do have their limitations but are good for picking out words at a quick glance. A package you can use to create these is `ggwordcloud`. This package provides a couple of shortcut functions to quickly produce wordclouds (`ggwordcloud()` and `ggwordcloud2()`) and also extends extends `ggplot2` by providing a number of *wordcloud geoms*. Using these geoms requires a bit more code but gives you full control over your wordcloud.
+
+Below we create a word cloud of all words appearing more than two times in the corpus. Note, in this example the word frequencies need to be sorted so that the most commonly occuring words appear at the start of the data frame.
+```{r eval=TRUE, echo=TRUE, fig.align='center', warnings=FALSE}
+library(ggwordcloud)
 
 words_filtered <- word_counts %>% filter(freq > 2) %>% arrange(desc(freq))
-wordcloud2(words_filtered) 
+ggwordcloud2(words_filtered, shuffle = F, size = 2.5, ellipticity = 0.9)
 ```
 
-```{r echo=FALSE}
-# Saved wordcloud used to avoid package conflicts with
-# leaflet, plotly and networkVis
+More information about plotting with `ggplot2` can be found in the [Creating charts](#charts) section and more information about `ggwordcloud` [can be found here](https://cran.r-project.org/web/packages/ggwordcloud/vignettes/ggwordcloud.html).
 
-shiny::tags$iframe(src = "images/wordcloud.html", 
-                       width=700, height=500)
-```
-
-This produces interactive HTML output, if you require an image file you can click on *Export > Save As Image* directly above the word cloud (in the Viewer pane of RStudio). More information about the `wordcloud2` package can be found [here](https://cran.r-project.org/web/packages/wordcloud2/vignettes/wordcloud.html).
 
 ## Machine learning
 
@@ -165,7 +161,7 @@ Machine learning can be used to try and detect patterns amongst text documents (
 
 ### Topic modelling
 
-Latent Dirichlet Allocation (LDA) is an unsupervised learning technique for identifying topics within a corpus. This is implemented in the `topicmodels` package. For example, the code below looks to identify five topics within the document-term-matrix `dtm`.
+Latent Dirichlet Allocation (LDA) is an unsupervised learning technique for identifying topics within a corpus. This is implemented in the `topicmodels` package. For example, the code below looks to identify five topics within the document-term matrix `dtm`.
 ```{r eval=FALSE}
 library(topicmodels)
 
@@ -181,14 +177,35 @@ Resources:
 
 ### Text features
 
-For other types of machine learning you will want to convert the document term matrix into a data frame of features. However, the document term matrix may contain features that do not appear very often which you want to remove, this can be done with the `removeSparseTerms()` function before converting to a dataframe.
+For other types of machine learning you will want to convert the document-term matrix into a data frame of features. However, the document-term matrix may contain features that do not appear very often which you want to remove, this can be done with the `removeSparseTerms()` function before converting to a dataframe.
 
 ```{r eval=FALSE}
 dtm = removeSparseTerms(dtm, 0.99)
 dtm <- as.data.frame(as.matrix(dtm))
 ```
 
-Notes:
 
-- In the previous sections we only computed unigrams (single words). Often you will want to include bigrams (two adjacent words) or trigrams in your analysis. `RWeka` is commonly used to create ngrams in R but the available version is currently not working on our network. [This post](https://datascience.stackexchange.com/questions/18522/text-mining-in-r-without-rweka) discusses how to create ngrams in R without using `RWeka`.
-- When the document-term-matrix is created you can specify where to weight the values via their term frequency-inverse document frequency (*tf-idf*).
+## N-grams
+
+An n-gram is a list of n sequential words taken from a document. For example, the phrase 
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "the quick brown fox jumps over the lazy dog"
+
+contains the bigrams
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "the quick", "quick brown", "brown fox", *etc*.
+
+These are often useful to visualise in order to understand phrases in the data or as additional features for machine learning models.
+
+The package `tidytext` can be used to produce a dataframe of bigrams that is useful for data exploration and data visualisation:
+
+```{r eval=FALSE}
+library(tidytext)
+
+bigrams <- tm_corpus %>% 
+  tm_map(PlainTextDocument) %>%
+  tidy() %>%
+  unnest_tokens(bigram, text, token = "ngrams", n = 2)
+```
+
+and the [tm FAQ](http://tm.r-forge.r-project.org/faq.html) shows how to include bigrams within a document-term matrix.

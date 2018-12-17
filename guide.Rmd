@@ -1,7 +1,7 @@
 ---
 title: "Self-learning guide to R"
 author: "HMRC Centre for Data Exploitation"
-date: "October 2018"
+date: "Updated: December 2018"
 output: 
   html_document:
     smart: true
@@ -11,6 +11,11 @@ output:
     toc_float:
       collapsed: TRUE
 ---
+
+
+```{r echo=FALSE}
+set.seed(42)
+```
 
 
 
@@ -74,12 +79,22 @@ output:
 
 ***
 
-```{r child = "sections/shiny.Rmd"}
+```{r child = "sections/dashboards.Rmd"}
+```
+
+***
+
+```{r child = "sections/programming.Rmd"}
 ```
 
 ***
 
 ```{r child = "sections/help.Rmd"}
+```
+
+***
+
+```{r child = "sections/summary.Rmd"}
 ```
 
 ***

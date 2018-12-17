@@ -52,33 +52,27 @@ gb <- st_read("../data/gb.json")
 
 ## Static maps
 
-Static maps can be created using `ggplot2`. The version of `ggplot2` currently available on the network cannot work with data from the `sf` package directly, you need to first change the format using the `broom` package as follows.
-
-```{r, eval=TRUE, results="hide", messages=FALSE, warning=FALSE}
-library(broom)
-
-gb_plot <- tidy(as(gb, "Spatial"), region = "ctry16nm")
-
-```
-
-This can then be easily plotted, and cab be joined to other data (for example, by using `dplyr`) in order to add on the values of quantities associated with these regions (for example, area or population). Note, the *polygon geom* has been used below for the converted boundary data and a *point geom* has been used to plot a point by specifying its longitude and latitude.
+Static maps can be created using `ggplot2` which can natively handle data objects produced by the `sf` package using `geom_sf()`. These objects can be easily plotted.
 
 ```{r eval=TRUE, waning=FALSE, message=FALSE}
 library(ggplot2)
 
-ggplot() + 
-  geom_polygon(aes(long, lat, group = group, fill = factor(id)), data = gb_plot) +
+ggplot(gb) + 
+  geom_sf(aes(fill = factor(ctry16nm))) +
   geom_point(aes(x = 0.1278, y = 51.5074)) +
-  coord_map() +
   theme(axis.title=element_blank(),
         axis.text=element_blank(),
         axis.ticks = element_blank(),
-        legend.title = element_blank())
+        legend.title = element_blank(), 
+        legend.spacing.x = unit(0.1, 'cm'))
 ```
 
-In future versions of `ggplot2` there is an *sf geom* (`geom_sf`), which should mean that the boundary data does not need converting before plotting. More information about plotting with `ggplot2` can be found in the [Creating charts](#charts) section.
+Note, the *sf geom* has been used below for the converted boundary data and a *point geom* has been used to plot a point by specifying its longitude and latitude. More information about plotting with `ggplot2` can be found in the [Creating charts](#charts) section.
+
+The `sf` library extends `dplyr` so that its powerful range of data manipulation functions can be used with `sf` objects. This means that geographic data can be joined to other data. For example, given county boundaries in an `sf` object you could join this to a table listing each of their populations, which could then be plotted to produce a *choropleth map*. 
 
 The package `ggmap` package extends the mapping capabilities of `ggplot2`, it allows maps to be drawn on top of map tiles from the internet. However, there are issues getting this to work with the version of `ggmap` currently available on the network but this can be done with the package `tmap` or with `leaflet` (discussed below).
+
 
 ## Interactive maps
 
@@ -88,6 +82,9 @@ The code below creates a basic `leaflet` map.
 
 ```{r eval=TRUE, warning=FALSE, message=FALSE, out.width='65%'}
 library(leaflet)
+
+# This line fixes an issue with leaflet 2.0.2 and sf 0.7-1
+names(st_geometry(gb)) = NULL
 
 leaflet(gb) %>% 
   setView(lng = -5, lat = 55, zoom = 5) %>% 

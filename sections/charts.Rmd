@@ -34,6 +34,7 @@ ggplot(diamonds, aes(x=carat, y=price, colour = color)) +
 
 In the code above we defined a plot with data from the `diamonds` dataset, with *carat* mapped onto the x axis, *price* mapped onto the y axis and *color* mapped to colour. Then we added a geom layer to create a scatterplot with diamond-shaped points, and then split the plot into panels subset by *cut*.
 
+The `ggsave("filename.png")` function can be used to save the plot which was most recently produced.
 
 ### Aesthetics vs Attributes
  
@@ -87,7 +88,7 @@ Resources:
 
 Networks describe the interactions between entities. This could be people communicating on social media, companies trading with one another or structures such as corporate groups. This is an example interacitve network diagram, try dragging the nodes.
 
-```{r network, eval=TRUE, echo=FALSE, out.width='45%', out.height='45%'}
+```{r network, eval=TRUE, echo=FALSE, warning=FALSE, out.width='45%', out.height='45%'}
 library(visNetwork)
 
 nodes <- data.frame(id = 1:5, label = c("A", "B", "C", "D", "E"))
@@ -99,7 +100,7 @@ edges <- data.frame(from  = c(1, 1, 1, 4),
 visNetwork(nodes, edges, height = "350px", width = "100%")
 ```
 
-There are a number of packages available for network visualization in R. Which package is most suitable will depend on your requirements; are you seeking to visualise a static network, a interactive network, or wanting to perform network analysis?
+There are a number of packages available for network visualization in R. Which package is most suitable will depend on your requirements; are you seeking to visualise a static network, a interactive network, or wanting to perform network analysis? For non-interactive graphs `ggraph` is a good option, and for interactive graphs `visNetwork` is a good.
 
 
 Resources:
@@ -113,4 +114,28 @@ Resources:
 ```{r network, echo=TRUE, eval=FALSE}
 ```
 
+*And a smiliar non-interactive version could be created with this code.*
+```{r eval=FALSE}
+library(igraph)
+library(ggraph)
 
+static_graph <- graph_from_data_frame(edges, vertices = nodes)
+  
+ggraph(static_graph, layout = "fr") +
+            geom_edge_link2(
+              aes(width = value),
+              colour = "lightblue",
+              show.legend = FALSE) +
+            geom_node_point(
+              size = 20,
+              fill = "cornflowerblue", 
+              color = "black", 
+              stroke = 1, 
+              shape = 21, 
+              show.legend = FALSE) +
+            geom_node_text(
+              aes(label = name), 
+              vjust = 3, 
+              hjust = 3) +
+            theme_void()
+```

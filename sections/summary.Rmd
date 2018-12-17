@@ -1,0 +1,90 @@
+
+# Summary
+
+Below is a quick summary of useful packages to use for common tasks.
+
+
+#### Working with structured data
+
+* `readr` - read csv files.
+* `read_xl` - read excel files.
+* `haven` - read SAS, Stata and SPSS files.
+* `DBI` and `odbc` - connect to a database.
+* `tidyr` - convert between wide and long data.
+* `dplyr` - manipulate / wrangle data.
+* `dbplyr` - using `dplyr` with database connections.
+
+
+#### Working with unstructured data
+
+* `jsonlite` - read json data.
+* `xml2` - read XML data.
+* `httr` - perform API calls.
+
+
+#### Working with text
+
+* `tm` - clean and wrangle text data.
+* `textstem` - lemmatise text.
+* `hunspell` - check spellings.
+* `ggwordcloud` - produce wordclouds.
+* `topicmodels` - build LDA topic models.
+* `LDAvis` - visualise LDA topic models.
+* `tidytext` - produce n-grams and perform sentiment analysis.
+* `text2vec` - a modern alternative to `tm`.
+
+
+#### Working with dates
+
+* `lubridate` - parse and manipulate dates.
+
+
+#### Working with geographic data
+
+* `sf` - read common geographic data types.
+* `ggplot2` - plot `sf` data to produce non-interactive maps.
+* `leaflet` - produce interactive maps.
+
+
+#### Taking samples
+
+* `dplyr` - use to sample data.
+
+
+#### Making inferences
+
+* `stats` - perform statistical analysis (preloaded package).
+
+
+#### Making predictions
+
+* `caret` - perform supervised learning (common interface to a wide range of packages).
+* `stas` - perfrom unsupervised learning (preloaded package).
+
+
+#### Making forecasts
+
+* `forecast` - perfrom forecasts and manipulate time series.
+* `X12` - replicate the functionality of the X13 command line tool.
+
+
+#### Creating charts
+
+* `ggplot2` - produce non-interactive charts.
+* `plotly` - produce interactive charts.
+* `dygraphs` produce interactive time series charts.
+* `visNetwork` - produce interactive network visualisations.
+* `ggraph` - produce non-interactive network visualisations.
+
+
+#### Creating reports
+
+* `knitr` - convert R Markdown documents into rendered files (via the "knit" button in RStudio).
+
+
+#### Creating dashboards
+
+* `flexdashboard` - produce simple dashboards in self-contained HTML files.
+* `crosstalk` - produce dashboards where separate elements interact.
+* `shiny` - produce dashboards that can run any R code but needs to be hosted.
+* `DT` - produce interactive tables.
