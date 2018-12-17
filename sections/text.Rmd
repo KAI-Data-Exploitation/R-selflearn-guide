@@ -108,7 +108,7 @@ Common visualisations used to explore text data include word frequency charts an
 
 Once your data has been cleaned you can start creating visualisations. One of these could be a word frequency chart. To do this we will use the `ggplot2` package.  
 After cleaning your data you'll have to create a document-term matrix using `tm`. This is a matrix whose elements indicate the number of times a given word (or term) has appeared within a given document. The columns denote words and the rows denote documents. The code below generate a document-term matrix on the *crude* dataset.  
-```{r results=FALSE, message=FALSE, warning=FALSE}
+```{r results=FALSE, message=FALSE, warning=FALSE, error=FALSE}
 library(tm)
 library(dplyr)
 library(tibble)
@@ -145,7 +145,7 @@ ggplot(wf, aes(x = reorder(word, -freq), y = freq, fill="")) +
 Another way you can visualise your data is by using a word cloud. Word clouds do have their limitations but are good for picking out words at a quick glance. A package you can use to create these is `ggwordcloud`. This package provides a couple of shortcut functions to quickly produce wordclouds (`ggwordcloud()` and `ggwordcloud2()`) and also extends extends `ggplot2` by providing a number of *wordcloud geoms*. Using these geoms requires a bit more code but gives you full control over your wordcloud.
 
 Below we create a word cloud of all words appearing more than two times in the corpus. Note, in this example the word frequencies need to be sorted so that the most commonly occuring words appear at the start of the data frame.
-```{r eval=TRUE, echo=TRUE, fig.align='center', warnings=FALSE}
+```{r warning=FALSE, message=FALSE, fig.align='center'}
 library(ggwordcloud)
 
 words_filtered <- word_counts %>% filter(freq > 2) %>% arrange(desc(freq))
