@@ -16,7 +16,7 @@ function_name <- function(arguement_1, arguement_2){
 
 ```
 
-The final return statement is optional, if it is not present the function will return the value of the last expression evaluated. These functions can then be called in the usual way, *e.g.* `function_name(arg1, arg2)`.
+The final return statement is optional; if it is not present the function will return the value of the last expression evaluated. These functions can then be called in the usual way, *e.g.* `function_name(arg1, arg2)`.
 
 ### If statements
 
@@ -92,11 +92,11 @@ map_int(vec_a, nchar)
 Resources:
 
 * *R for Data Science* has a good [chapter on programming](http://r4ds.had.co.nz/program-intro.html) which introduces many important concepts.
-*[Programming with R](https://swcarpentry.github.io/r-novice-inflammation/) has a number of episodes demonstrating different aspects of R programming.
+* [Programming with R](https://swcarpentry.github.io/r-novice-inflammation/) has a number of episodes demonstrating different aspects of R programming.
 * RStudio cheat sheet on applying functions with `purrr` [(Download here)](https://github.com/rstudio/cheatsheets/raw/master/purrr.pdf).
 * More advanced topics such as different programming styles and writing more performant code are discussed in [Advanced R](http://adv-r.had.co.nz/).
-* Creating your own R package there [discussed here](http://r-pkgs.had.co.nz/).
-* Debugging code is discussed [in these articles](https://support.rstudio.com/hc/en-us/articles/205612627-Debugging-with-Rstudio.
+* Creating your own R package is [discussed here](http://r-pkgs.had.co.nz/).
+* Debugging code is discussed [in these articles](https://support.rstudio.com/hc/en-us/articles/205612627-Debugging-with-Rstudio).
 * The [tidyverse style guide](http://style.tidyverse.org/) is a commonly followed style guide.
 
 

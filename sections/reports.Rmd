@@ -2,16 +2,16 @@
 # Creating reports {#reports}
 
 
-R Markdown can be used to write reports. You write your document using Markdown (a widely used simple markup language) and you can insert R code within the document. This code can be run when you create your output document (a process called **knitting**) allowing you to insert numbers, tables and charts produced by R in your report. This is good for reproducibility as the outputs of your analysis and the code that produced it are together within the same document.
+R Markdown can be used to write reports. You write your document using Markdown (a widely used simple markup language) and you can insert R code within the document. This code can be run when you create your output document (a process called **knitting**), allowing you to insert numbers, tables and charts produced by R in your report. This is good for reproducibility as the outputs of your analysis and the code that produced it are together within the same document.
 
-R Markdown is also perfect for producing guidance on using R as it is simple to include blocks of code where different parts of the R syntax have been highlighted in different colours.  You can also write equations using LaTeX syntax, for example the code
+R Markdown is also perfect for producing guidance on using R as it is simple to include blocks of code where different parts of the R syntax have been highlighted in different colours.  You can also write equations using LaTeX syntax; for example, the code
 ```{r eval=FALSE}
 $$e^{i\pi} + 1 = 0$$
 ```
 produces the following rendered equation
 $$e^{i\pi} + 1 = 0$$
 
-R Markdown can be used to create HTML, PDF, word documents and various presentation formats. However, at the time of writing only HTML documents (or HTML slides) can be produced on our network. But HTML documents have the advantage that they can include interactive elements from packages such as `leaflet` for maps or `plotly` for graphs that produce HTML output.
+R Markdown can be used to create HTML, PDF and Word documents, and various presentation formats. However, at the time of writing only HTML documents (or HTML slides) can be easily produced on our network. Nevertheless, HTML documents have the advantage that they can include interactive elements from packages that produce HTML output such as `leaflet` for maps or `plotly` for graphs.
 
 RStudio contains a lot of built-in support for R Markdown. To create a new R Markdown document just go to *New File > R Markdown*. This opens a menu which guides you through setting up a markdown project and even produces a template document to get you started.
 

@@ -3,7 +3,7 @@
 
 Dates and date-times are a base type in R and can be used in arithmetic and within logical expressions.
 
-If you import date using one of the functions within `readr` it will try to infer the date format; turning the date field into a date variable where possible. Otherwise the field would appear as a string and you would need to tell R that this string is a date by specifying the format. For example:
+If you import dates using one of the functions within `readr` it will try to infer the date format; turning the date field into a date variable where possible. Otherwise the field would appear as a string and you would need to tell R that this string is a date by specifying the format. For example:
 ```{r eval=FALSE}
 string_date <- "30-01-2010"
 date <- as.Date(string_date, format = "%d-%m-%Y")
@@ -15,7 +15,7 @@ string_datetime <- "30-01-2010 10:30:05"
 date_time <- as.POSIXct(string_datetime, format = "%d-%m-%Y %H:%M:%S")
 ```
 
-The `lubridate` package contains a variety of ultities that make it easier to work with dates and times. For example, it offers a series of functions that infer the date for you:
+The `lubridate` package contains a variety of utilities that make it easier to work with dates and times. For example, it offers a series of functions that infer the date for you:
 ```{r eval=FALSE}
 library(lubridate)
 
@@ -23,7 +23,7 @@ date_1 <- ymd("2010 April 01")
 date_2 <- mdy("Apr 01, 10")
 date_3 <- dmy("1st April 2010")
 ```
-and functions to work with intervals between date ranges, and to easily add a set number of days, weeks or months to dates.
+It also provides functions that work with intervals between date ranges, and to easily add a set number of days, weeks or months to dates.
 
 Resources:
 

@@ -3,9 +3,9 @@
 
 This section focuses on generating samples from data. Most types of sampling can be done by manipulating the data using functions from the packages `dplyr` or `purrr`. These should be enough for most purposes. 
 
-More advanced sampling techniques can be found in the `sampling` package or in the `boot` package (which focuses on bootstrapping methods). If you already have survey data, the `survey` package allows you to calculate statistics taking into account factors such as different finite population corrections
+More advanced sampling techniques can be found in the `sampling` package or in the `boot` package (which focuses on bootstrapping methods). If you already have survey data, the `survey` package allows you to calculate statistics taking into account factors such as different finite population corrections.
 
-Examples of sampling the `df` data frame:
+Examples of sampling the `df` dataframe:
 
 ### Simple random sampling
 
@@ -56,7 +56,7 @@ start <- sample(1:rows, size = 1)
 # Generate indices for the sample
 indx <- seq(from = start, to = (start + (n-1)*every), by = every)
 
-# If index larger than the number of rows, cycle round the data frame
+# If index larger than the number of rows, cycle round the dataframe
 indx2 <-
   indx %>%
   map_dbl(~ (.x -1) %% rows + 1 )
@@ -65,7 +65,7 @@ indx2 <-
 my_sample <- df[indx2, ]
 ```
 
-Note, the `sample_n` command might not work with database connections.
+Note that the `sample_n` command might not work with database connections.
 
 
 Resources:

@@ -18,16 +18,16 @@ Help can be searched in the console with the commands shown to the left; this wi
 
 #### Vignettes
 
-Many packages contain vignettes, these are examples that demonstrate how to use the package by working through an example with actual code. Some packages have more than one vignette. For example, browse for the vignettes for the `dplyr` package with the following command: ```browseVignettes(package = "dplyr")```
+Many packages contain vignettes; these are examples that demonstrate how to use the package by working through an example with actual code. Some packages have more than one vignette. For example, browse for the vignettes for the `dplyr` package with the following command: ```browseVignettes(package = "dplyr")```
 
 #### Stack Overflow
 
-Stack overflow is a programing question and answer site and is a good place to start when needing help with R as chances are someone else has already asked about the very thing you are stuck on. The questions on R can be found at: https://stackoverflow.com/questions/tagged/r
+Stack Overflow is a programming question and answer site and is a good place to start when needing help with R as the chances are that someone else has already asked about the very thing you are stuck on. The questions on R can be found at: https://stackoverflow.com/questions/tagged/r
 
 
 ## Additional resources
 
-There are a wide range of R resources available online.
+There is a wide range of R resources available online.
 
 #### Test data sets
 
@@ -35,9 +35,9 @@ R comes with a number of test data sets built in, and many other packages provid
 
 #### Cheat sheets
 
-Cheatsheets are helpful reminders of a shortcuts, functions, arguments and the like. They tend to be short but dense infographics, which can be a bit intimidating. They are useful for reminding you of the bit of code that does a particular task. 
+Cheat sheets are helpful reminders of shortcuts, functions, arguments and the like. They tend to be short but dense infographics, which can be a bit intimidating. However, they are useful for reminding you of the bit of code that does a particular task. 
 
-Useful cheat cheats include:
+Useful cheat sheets include:
 
 * https://www.rstudio.com/resources/cheatsheets/
 * https://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf
@@ -49,7 +49,7 @@ Further examples are listed under specific topics.
 
 #### GitHub
 
-GitHub is a development platform, and many R packages were developed on there. The homepage is not very helpful unless you have an account, but you should be able to view search results that point to GitHub from Google (other search engines are available...). Every repository should have a README.md file, explaining the contents, which appears automatically at the bottom of the page.
+GitHub is a development platform, and many R packages were developed on there. The homepage is not very helpful unless you have an account, but you should be able to view search results that point to GitHub from Google (other search engines are available...). Every repository should have a README.md file explaining the contents, which appears automatically at the bottom of the page.
 
 Example repositories:
 

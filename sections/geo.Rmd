@@ -1,26 +1,26 @@
 
 # Working with geographic data {#maps}
 
-There are a wide range of packages for working with geographic data in R; from packages such as `sf` that make it easy to work with geographic file types, to packages such as `ggplot2`, `tmap`, `ggmap`, and `leaflet` that enable easy plotting of this data.
+There are a wide range of packages for working with geographic data in R, from packages such as `sf` that make it easy to work with geographic file types, to packages such as `ggplot2`, `tmap`, `ggmap`, and `leaflet` that enable easy plotting of this data.
 
-Typically you want to either create a *choropleth map* (where different regions are coloured differently depending on a quantity associated with that geographic area), or to plot the location of given points on a map. These plots can either be static (perfect for traditional reports or slide decks) or interactive where you can pan and zoom across the map.
+Typically you want either to create a *choropleth map* (where different regions are coloured differently depending on a quantity associated with that geographic area), or to plot the location of given points on a map. These plots can either be static (perfect for traditional reports or slide decks) or interactive where you can pan and zoom across the map.
 
 To make plots like these you need (in addition to your data containing geographic identifiers such as post codes):
 - **Boundary data**: to show the shape of areas (countries, counties, constituencies, wards *etc.*).
-- **Map tiles**: if you want to overlap the data on maps, for example, road maps.
+- **Map tiles**: if you want to overlap the data on maps, for example road maps.
 
 Resources:
 
 * [Introduction to visualising spatial data in R](https://github.com/Robinlovelace/Creating-maps-in-R) is an introduction to displaying geographic information in R [(PDF available here)](https://github.com/Robinlovelace/Creating-maps-in-R/blob/master/intro-spatial-rl.pdf)
 * [Geocomputation with R](https://geocompr.robinlovelace.net/) is a book for "people who want to analyse, visualize and model geographic data" in R
-* [Spatial Cheatsheet](https://www.maths.lancs.ac.uk/~rowlings/Teaching/UseR2012/cheatsheet.html)
+* [Spatial cheat sheet](https://www.maths.lancs.ac.uk/~rowlings/Teaching/UseR2012/cheatsheet.html)
 
 
 ## Getting data
 
 There are many resources of geographic data available but here we will focus on the ones provided by the ONS. Their data is collected in the [ONS Geography Portal](http://geoportal.statistics.gov.uk/).
 
-Particularly useful are [a number of datasets](http://geoportal1-ons.opendata.arcgis.com/datasets?q=postcode) that allow post codes to be mapped to areas (wards, output areas *etc.*), and the outline of these areas can be obtained boundary by clicking on the boundaries ribbon:
+Particularly useful are [a number of datasets](http://geoportal1-ons.opendata.arcgis.com/datasets?q=postcode) that allow post codes to be mapped to areas (wards, output areas *etc.*). The outlines of these areas can be obtained by clicking on the boundaries ribbon:
 
 ```{r, echo=FALSE, out.width='45%', fig.align='center'}
 knitr::include_graphics("images/boundaries.PNG")
@@ -32,9 +32,9 @@ Typically there are *Full*, *Generalised*, *Super Generalised*, and *Ultra Gener
 knitr::include_graphics("images/geojson.PNG")
 ```
 
-The above boundaries split Britain into areas (for example, counties) and provides all the boundaries of that type. Individual boundaries (for example, for a single county) can be obtained from the [ONS Geography Linked Data website](http://statistics.data.gov.uk/).
+The above boundaries data splits Britain into areas (for example, counties) and provides all the boundaries of that type. Individual boundaries (for example, for a single county) can be obtained from the [ONS Geography Linked Data website](http://statistics.data.gov.uk/).
 
-The code below demonstrates downloading boundary data for the countries in the UK as GeoJSON and loading it into R using the `sf` package.
+The code below demonstrates downloading boundary data for the three countries within Great Britain as GeoJSON and loading it into R using the `sf` package.
 
 ```{r eval=FALSE, warning=FALSE, message=FALSE, results="hide"}
 library(sf)
@@ -67,11 +67,11 @@ ggplot(gb) +
         legend.spacing.x = unit(0.1, 'cm'))
 ```
 
-Note, the *sf geom* has been used below for the converted boundary data and a *point geom* has been used to plot a point by specifying its longitude and latitude. More information about plotting with `ggplot2` can be found in the [Creating charts](#charts) section.
+Note that the *sf geom* has been used below for the converted boundary data and a *point geom* has been used to plot a point by specifying its longitude and latitude. More information about plotting with `ggplot2` can be found in the [Creating charts](#charts) section of this guide.
 
 The `sf` library extends `dplyr` so that its powerful range of data manipulation functions can be used with `sf` objects. This means that geographic data can be joined to other data. For example, given county boundaries in an `sf` object you could join this to a table listing each of their populations, which could then be plotted to produce a *choropleth map*. 
 
-The package `ggmap` package extends the mapping capabilities of `ggplot2`, it allows maps to be drawn on top of map tiles from the internet. However, there are issues getting this to work with the version of `ggmap` currently available on the network but this can be done with the package `tmap` or with `leaflet` (discussed below).
+The package `ggmap` package extends the mapping capabilities of `ggplot2`, allowing maps to be drawn on top of map tiles from the internet. However, there are issues getting this to work, but this can be done with the package `tmap` or with `leaflet` (discussed below).
 
 
 ## Interactive maps
@@ -92,4 +92,4 @@ leaflet(gb) %>%
   addPolygons(weight = 1, color = "black", fillColor = c("red", "green", "blue"))
 ```
 
-Note, that `leaflet` goes to the internet to retrieve the map tiles. These map tiles are provided by third parties and you should check the licences of the ones you are using.
+Note that that `leaflet` goes to the internet to retrieve the map tiles. These map tiles are provided by third parties and you should check the licences of the ones you are using.

@@ -59,12 +59,12 @@ Below is a quick summary of useful packages to use for common tasks.
 #### Making predictions
 
 * `caret` - perform supervised learning (common interface to a wide range of packages).
-* `stas` - perfrom unsupervised learning (preloaded package).
+* `stas` - perform unsupervised learning (preloaded package).
 
 
 #### Making forecasts
 
-* `forecast` - perfrom forecasts and manipulate time series.
+* `forecast` - perform forecasts and manipulate time series.
 * `X12` - replicate the functionality of the X13 command line tool.
 
 
@@ -86,5 +86,5 @@ Below is a quick summary of useful packages to use for common tasks.
 
 * `flexdashboard` - produce simple dashboards in self-contained HTML files.
 * `crosstalk` - produce dashboards where separate elements interact.
-* `shiny` - produce dashboards that can run any R code but needs to be hosted.
+* `shiny` - produce dashboards that can run any R code but need to be hosted.
 * `DT` - produce interactive tables.

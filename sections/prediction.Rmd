@@ -1,11 +1,11 @@
 
 # Making predictions
 
-Predictive analytics is a suite of techniques for making predictions by learning patterns from data, typically using machine learning techiques. These techniques can be split in to two types; *supervised learning* and *unsupervised learning*. In supervised learning you know the true value of the variable of interest, whereas with unsupervised learning you do not have this variable so you instead look to understand the structure present within the data.
+Predictive analytics is a suite of techniques for making predictions by learning patterns from data, typically using machine learning techiques. These techniques can be split into two types: *supervised learning* and *unsupervised learning*. In supervised learning you know the true value of the variable of interest, whereas with unsupervised learning you do not have this variable so you instead look to understand the structure present within the data.
 
 ## Supervised learning
 
-R contains an extremely wide range of different techniques; from well-established methods to more niche approaches. Typically different techniques have their own package, and whilst syntaxes between packages tend to be similar they normally differ to some degree.
+R contains an extremely wide range of different techniques, from well-established methods to more niche approaches. Typically, different techniques have their own package, and whilst syntaxes between packages tend to be similar they normally differ to some degree.
 
 If you will only ever use one technique it makes sense to learn that package or function in detail. For example,
 
@@ -13,7 +13,7 @@ If you will only ever use one technique it makes sense to learn that package or 
 - `glm()` from the built-in stats package performs logistic regression (and other generalised linear models)
 - `rpart()` from the `rpart` package constructs decision trees.
 
-However, if you want to use a range of different techniques, be it within a single project or using different techniques for different taks, it makes sense to use the `caret` package (**C**lassification **A**nd **RE**gression **T**raining) which provides a common interface to a wide range of R packages that deal with classification and regression.
+However, if you want to use a range of different techniques, be it within a single project or using different techniques for different tasks, it makes sense to use the `caret` package (**C**lassification **A**nd **RE**gression **T**raining), which provides a common interface to a wide range of R packages that deal with classification and regression.
 
 `caret` also provides functions to preprocess data (for example scaling features or performing principal components analysis), for combining models (ensembling), and for evaluating the performance of models (including train/test splits, cross-validation and confusion matrices).
 
@@ -52,7 +52,7 @@ testing <-  df[-inTrain, ]
 
 #### Training the model
 
-Any of the models that `caret` contains can be trained using the `train()` function. For example, if you had a dataframe called `training` containing the columns `outcome`, `feature_1`, `feature_2`, and `feature_3` you can train a decision using the following code
+Any of the models that `caret` contains can be trained using the `train()` function. For example, if you had a dataframe called `training` containing the columns `outcome`, `feature_1`, `feature_2`, and `feature_3` you can train a decision using the following code:
 ```{r eval=FALSE}
 # Train using just feature_1
 model <- train(outcome ~ feature_1, data = training, method="rpart")
@@ -64,15 +64,15 @@ model <- train(outcome ~ feature_1 + feature_2, data = training, method="rpart")
 model <- train(outcome ~ . , data = training, method="rpart")
 ```
 
-Note, this uses R's formula notation, where `outcome ~ feature_1` means you want to explain `outcome` using `feature_1`. Instead you can pass the function `train()` a matrix of features as the `x` argument and a matrix of outcomes as the `y` argument.
+Note that this uses R's formula notation, where `outcome ~ feature_1` means that you want to explain `outcome` using `feature_1`. Instead you can pass a matrix of features to the function `train()` as the `x` argument and a matrix of outcomes as the `y` argument.
 
 #### Evaluating the model
 
-Predictions can then be made using this model; this could be done on the test set in order to evaluate the model or on new data when the model is run for real.
+Predictions can then be made using this model; this can be done on the test set in order to evaluate the model or on new data when the model is run for real.
 ```{r eval=FALSE}
 predictions <- predict(model, newdata = testing)
 ```
-which can be evaluated, for example by calculating the confusion matrix if were a classifciation task.
+which can be evaluated, for example by calculating the confusion matrix if it were a classification task.
 ```{r eval=FALSE}
 confusionMatrix(data = prediction, testing$outcome)
 ```
@@ -105,8 +105,8 @@ https://www.datacamp.com/community/tutorials/r-formula-tutorial#using)
 
 One of the main techniques in unsupervised learning is clustering. This is a way of exploring the data and seeing which data points naturally group together. Clustering is typically used outside of making predictions, but can be used as features for a supervised learning model or, when you are happy with the clusters identified, you can predict which clusters unseen data points belong to.
 
-The built-in stats package provides the function `hclust()` for hierarchical clustering and the function `kmeans()` for K-means clustering. Packages, such as `dbscan`, are also available that implement other clustering techniques.
+The built-in stats package provides the function `hclust()` for hierarchical clustering and the function `kmeans()` for K-means clustering. Packages such as `dbscan` are also available that implement other clustering techniques.
 
-K-means clustering is often used because it is computational efficient, but it can fail to produce the clusters you expect in certain circumstances because it makes a number of assumptions about the data. The documentation for `sklearn` (a Python package) has a [good demonstration of this](http://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_assumptions.html).
+K-means clustering is often used because it is computationally efficient, but it can fail to produce the clusters you expect in certain circumstances because it makes a number of assumptions about the data. The documentation for `sklearn` (a Python package) has a [good demonstration of this](http://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_assumptions.html).
 
 More information about how to apply these two techniques in R can be found on [Quick-R](https://www.statmethods.net/advstats/cluster.html) and a tutorial on using K-means clustering can be found on [DataCamp](https://www.datacamp.com/community/tutorials/k-means-clustering-r).

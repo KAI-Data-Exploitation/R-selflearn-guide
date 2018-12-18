@@ -142,9 +142,9 @@ ggplot(wf, aes(x = reorder(word, -freq), y = freq, fill="")) +
 
 ### Word clouds
 
-Another way you can visualise your data is by using a word cloud. Word clouds do have their limitations but are good for picking out words at a quick glance. A package you can use to create these is `ggwordcloud`. This package provides a couple of shortcut functions to quickly produce wordclouds (`ggwordcloud()` and `ggwordcloud2()`) and also extends extends `ggplot2` by providing a number of *wordcloud geoms*. Using these geoms requires a bit more code but gives you full control over your wordcloud.
+Another way you can visualise your data is by using a word cloud. Word clouds do have their limitations but are good for picking out words at a quick glance. A package you can use to create these is `ggwordcloud`. This package provides a couple of shortcut functions to quickly produce wordclouds (`ggwordcloud()` and `ggwordcloud2()`) and also extends extends `ggplot2` by providing a number of wordcloud geoms. Using these geoms requires a bit more code but gives you full control over your wordcloud; for example, it provides control over whether the size of the text scales with the word frequency or the square of the frequency and over the shape of the overall wordcloud.
 
-Below we create a word cloud of all words appearing more than two times in the corpus. Note, in this example the word frequencies need to be sorted so that the most commonly occuring words appear at the start of the data frame.
+Below we create a word cloud of all words appearing more than two times in the corpus. Note that in this example the word frequencies need to be sorted so that the most commonly occuring words appear at the start of the dataframe.
 ```{r warning=FALSE, message=FALSE, fig.align='center'}
 library(ggwordcloud)
 
@@ -157,7 +157,7 @@ More information about plotting with `ggplot2` can be found in the [Creating cha
 
 ## Machine learning
 
-Machine learning can be used to try and detect patterns amongst text documents (*topic modelling*) and text can also be used as features in predictive models.
+Machine learning can be used to try and detect patterns across text documents (*topic modelling*) and text can also be used as features in predictive models.
 
 ### Topic modelling
 
@@ -177,7 +177,7 @@ Resources:
 
 ### Text features
 
-For other types of machine learning you will want to convert the document-term matrix into a data frame of features. However, the document-term matrix may contain features that do not appear very often which you want to remove, this can be done with the `removeSparseTerms()` function before converting to a dataframe.
+For other types of machine learning you will want to convert the document-term matrix into a dataframe of features. However, the document-term matrix may contain features that do not appear very often and that you want to remove. This can be done with the `removeSparseTerms()` function before converting to a dataframe.
 
 ```{r eval=FALSE}
 dtm = removeSparseTerms(dtm, 0.99)
@@ -208,4 +208,4 @@ bigrams <- tm_corpus %>%
   unnest_tokens(bigram, text, token = "ngrams", n = 2)
 ```
 
-and the [tm FAQ](http://tm.r-forge.r-project.org/faq.html) shows how to include bigrams within a document-term matrix.
+The [tm FAQ](http://tm.r-forge.r-project.org/faq.html) shows how to include bigrams within a document-term matrix.
