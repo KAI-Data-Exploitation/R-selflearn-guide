@@ -59,7 +59,7 @@ Below is a quick summary of useful packages to use for common tasks.
 #### Making predictions
 
 * `caret` - perform supervised learning (common interface to a wide range of packages).
-* `stas` - perform unsupervised learning (preloaded package).
+* `stats` - perform unsupervised learning (preloaded package).
 
 
 #### Making forecasts
